@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV Transformer Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #1e1e2f;
+            color: #f0f0f0;
+        }
+        .card {
+            background-color: #2c2c3e;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        select, input, button {
+            background-color: #383850;
+            color: #fff;
+            border: none;
+        }
+        select:focus, input:focus, button:focus {
+            box-shadow: none;
+        }
+        .table-dark th, .table-dark td {
+            color: #fff;
+        }
+        .form-label {
+            margin-top: 10px;
+            color: #fff !important;
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #toast-container {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div id="toast-container"></div>
+
+    <!-- Help Button -->
+    <div class="position-absolute top-0 end-0 p-3">
+        <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#helpModal">
+            <i class="fa-solid fa-circle-question"></i> Help
+        </button>
+    </div>
+    
+    <!-- Help Modal -->
+    <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content bg-dark text-white">
+          <div class="modal-header">
+            <h5 class="modal-title" id="helpModalLabel">Transformation Help Guide</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="helpContent">
+            <!-- Help content will be dynamically injected here -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Title and Description -->
+    <div class="text-center my-4">
+        <h3 class="fw-bold">DataMorph: Effortless CSV Transformations</h3>
+        <p class="text-light">
+            Upload your CSV file, apply smart transformations column-wise, and preview the results. 
+            Use the help icon for guidance.(Max 20mb)
+        </p>
+    </div>
+    
+    <!-- Main App Container -->
+    <div class="container-fluid py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card">
+                    <div class="row">
+                        <!-- Sidebar -->
+                        <div class="col-md-3">
+                            <div class="d-grid gap-2" id="transformation-form" style="display: none;">
+                                <label class="form-label">Select Column</label>
+                                <select class="form-select" id="columnSelect"></select>
+    
+                                <label class="form-label">Select Transformation</label>
+                                <select class="form-select" id="operationSelect"></select>
+    
+
+                            <div id="extra-fields"></div>
+                            <button class="btn btn-outline-light mt-2" onclick="applyTransformation()">
+                                <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Apply
+                            </button>
+
+                            <button class="btn btn-outline-warning d-none mt-2" id="revertBtn" onclick="revertLastChange()">
+                                <i class="fa-solid fa-arrow-rotate-left me-1"></i> Revert Last Change
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Area -->
+                    <div class="col-md-9">
+                        <div class="mb-3">
+                            <label for="csvFile" class="form-label">
+                                <i class="fa-solid fa-upload me-1"></i> Upload CSV File
+                            </label>
+                            <input class="form-control" type="file" id="csvFile">
+                        </div>
+                        <!-- Inside your main content area -->
+                        <div id="preview" class="table-responsive my-3 fade-in" style="max-height: 500px; overflow: auto;"></div>
+
+                        <!-- Move buttons OUTSIDE preview -->
+                        <div class="d-flex justify-content-between" id="pagination-buttons">
+                            <button class="btn btn-outline-light" onclick="changePage(-1)">Previous</button>
+                            <button class="btn btn-outline-light" onclick="changePage(1)">Next</button>
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button class="btn btn-success d-none" id="downloadBtn">
+                        <i class="fa-solid fa-download me-1"></i> Download CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+<footer class="bg-secondary text-white text-center py-2 mt-5 fixed-bottom">
+    <div>For any issues/suggestions/or anything :  <a href="mailto:your@email.com" class="text-white">	datatoolfordummies@gmail.com</a></div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
